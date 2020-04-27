@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="stylesheet" type="text/css" href="first_page.css">
+
+	<style type="text/css">
+		#page_two, #page_three {display: none;}
+	</style>
+</head>
+
+<body>
+
+<div id="page_one">
+    <!--
+    This div is for the left part of the screen.
+    This is because I 'technically' divided the 
+    page into two parts.There is nothing particu-
+    larly amazing to be linked to the database.
+  -->
+  <div class="split left">
+    <div class="centered">
+      <img src="listening.png" alt="Avatar woman">
+      <h2 >Making Playlists Enjoyable</h2>
+    </div>
+  </div>
+
+  <!--
+    We are going to use the username div to retrieve
+    data submitted trough this class.
+  -->
+  <div class="split right">
+    <div class="centered-login">
+      <h1>Musica</h1>
+      <form method="GET" action="/login">
+        <div class="user-name"> 
+            <input type="text" name="user_in" placeholder="Enter username" ><br><br>
+            <input type="radio" id="newUser" name="user_status" value="newUser">
+            <label for="newUser">New User</label>
+            <input type="radio" id="oldUSer" name="user_status" value="oldUser">
+            <label for="oldUser">Existing User</label><br><br>
+            <input type='submit' value='Log In'>
+            <h3> OR </h3> 
+            <input type='submit' style="background-color: green" value='Login with Spotify' formaction="/loginSpotify">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+    <div id="page_two">
+    	<input id='refresh_token' type='button' value='Refresh access token' onclick='refreshToken()'><br/>
+    	<input id='data_in' type='button' value="Submit data" onclick='postData()'>
+    </div>
+
+    <div id="page_three">
+    	Thank you for finding new music with us!
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+    var access_token = '';
+    var refresh_token = '';  
+    (function() {
+
+        /**
+         * Obtains parameters from the hash of the URL
+         * @return Object
+         */
+
+        function getHashParams() {
+        	var hashParams = {};
+          	var e, r = /([^&;=]+)=?([^&;]*)/g,
+            q = window.location.hash.substring(1);
+          	while ( e = r.exec(q)) {
+             	hashParams[e[1]] = decodeURIComponent(e[2]);
+          	}
+          	return hashParams;
+        }
+
+        var params = getHashParams();
+        var key = params.status;
+        var err = params.error;
+        access_token = params.access_token;
+        refresh_token = params.refresh_token;
+        if (key == "success") {
+        	document.getElementById('page_one').style.display = 'none';
+        	document.getElementById('page_two').style.display = 'block';
+        }
+        else if (key == 'fail') {
+            alert(err);
+        	document.getElementById('page_one').style.display = 'block';
+        	document.getElementById('page_two').style.display = 'none';
+        };
+    })();
+    </script>
+
+    <script>
+    	function refreshToken() {
+    		url = "/refresh_token" + "?refresh_token=" + refresh_token;
+
+    		var request = new XMLHttpRequest();
+    		request.open("GET", url, true);
+
+    		request.setRequestHeader('Content-type', 'application/text');
+
+    		request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+                    response = JSON.parse(request.responseText);
+					access_token = response['access_token'];
+                    alert("Got new token: " + access_token);
+				};
+			};
+			request.send();
+    	}
+
+    	function postData() {
+    		var to_send = {artist: 'Bruno Mars', song:'When I was your man'};
+    		to_send = JSON.stringify(to_send);
+    		url = "/post";
+
+    		var request = new XMLHttpRequest();
+    		request.open("POST", url, true);
+
+    		request.setRequestHeader('Content-type', 'application/json');
+
+    		request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+					document.getElementById('page_two').style.display = 'none';
+					document.getElementById('page_three').style.display = 'block';
+				};
+			};
+			request.send(to_send);
+
+    	}
+    </script>
+</body>
+
+</html>

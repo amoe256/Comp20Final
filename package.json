@@ -1,0 +1,25 @@
+{
+  "name": "projecttestkatya",
+  "version": "1.0.0",
+  "description": "node app ",
+  "main": "check_mongo.js",
+  "scripts": {
+    "start": "node check_mongo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.5.6",
+    "request": "^2.88.2",
+    "spotify-web-api-node": "^4.0.0"
+  }
+}
