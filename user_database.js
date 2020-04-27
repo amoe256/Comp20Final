@@ -16,8 +16,7 @@ http.createServer(function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/html;charset=utf8'});
     var formData = url.parse(req.url, true).query;
     var userName = formData.userName;
-    
-    if (req.method == 'GET') {
+    if (req.method == 'GET' && req.url != '/favicon.ico') {
         MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
             if (err)
                 return console.log("Error connecting to DB: " + err);
@@ -28,14 +27,17 @@ http.createServer(function(req, res) {
             collection.find().toArray(async (err, items) => {
                 if (err)
                     return console.log(err);
-                user = await findUser(items, userName);
+                user = findUser(items, userName);
                 if (user == 0) {
-                    //await addUser(collection, userName);
+                    console.log("adding: " + userName);
+                    addUser(collection, userName);
                 }
                 else {
-                    //await deleteUser(collection, userName);
+                    //var song = {title: "Gorgeous", artist: "slowthai"};
+                    //addSongs(collection, user, song);
+                    getDisplaySongs(user);
                 }
-            })
+            });
         });
     }
     res.end();
@@ -43,7 +45,8 @@ http.createServer(function(req, res) {
 
 // Add user
 function addUser(collection, userName) {
-    var record = {"userName": userName};
+    var songs = []
+    var record = {"userName": userName, "songs": songs};
     collection.insertOne(record, (err, res) => {
         if (err)
             return console.log(err);
@@ -68,4 +71,32 @@ function findUser(users, userName)
              return users[i];
     }
     return 0;
+}
+
+// Adds songs to user account
+function addSongs(collection, user, newSongs)
+{
+    var query = {"userName": user.userName};
+    songs = user.songs;
+    songs.push(newSongs);
+    var update = {$set: {"songs": songs}};
+    collection.updateOne(query, update, (err, res) => {
+        if (err)
+            return console.log(err);
+    });
+}
+
+function getDisplaySongs(user)
+{
+    var display = [];
+    var first = user.songs.length - 1;
+    var last;
+    if (first >= 5)
+        last = first - 5;
+    else   
+        last = 0;
+    for (i = first; i >= last; i--) {
+        //display.push(user.songs[i])
+        console.log(user.songs[i]);
+    }
 }
