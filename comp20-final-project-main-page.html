@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="comp20-final-project-main-page.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/ff0710396e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- 
+  The left  part is basically where the menu and other useful links are.
+  Whatever user searches will be displayed on the right part.
+  -->   
+<div class="split left">
+  <br>
+  <h2 style="display: inline; padding:2%;  font-size: 40px; color: white"> Musica!</h2>
+  <a href="#"><img src="undraw_profile_pic_ic5t.svg" id = "profile"></a>
+  <div class="centered">
+  <br>
+  <form class="example"  style="margin:auto;max-width:300px" on>
+    <input type="text" placeholder="Search songs, genre, ..." name="search2">
+    <button type="button"><i class="fa fa-search" onclick="loadDataFromDatabase2Page()"></i></button>
+  </form>
+  <br>
+  <p>A BANGING MENU, JUST FOR YOU!</p>
+  <button class="menu_button" onclick="listGenreFromDatabase()">Genre</button><br><br>
+  <button class="menu_button" onclick="printToPage()">Artists</button><br><br>
+  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Albums</button><br><br>
+  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Last Five Played</button><br><br>
+  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Your Top Five Songs</button><br><br>
+  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Your Favorites Tracks</button><br><br>
+  <br><br>
+  <p> YOUR PLAYLISTS </p>
+  <div id="playlist">
+    <!-- 
+      I am going to write a function for this. We can keep tis block of code for now
+    -->
+    <button class="playlist" onclick="listPlayLists()">Playlist1</button><br><br>
+    <button class="playlist" onclick="listPlayLists()">Playlist1</button><br><br>
+    <button class="playlist" onclick="listPlayLists()">Playlist1</button><br><br>
+    <button class="playlist" onclick="listPlayLists()">Playlist1</button><br><br>
+  </div>
+  </div>
+</div>
+</div>
+<!-- 
+  The rightt  part is basically where the the user will be integrating with the app more.
+  Whatever the user searches will be displayed on this part.
+  -->  
+<div class="split right">
+  <div class="centered" style="text-decoration-color: black">
+    <div class="container" id="list-homepage-songs">
+      <h1 style="text-align: center;"> Welcome to Musica!</h1>
+      <h2 style="text-align: center;"> As you can see, I'm just waiting for your choices to display!</h2>
+      <img src="undraw_happy_music_g6wc.svg" style="height: 100%; width: 50%;">
+    </div>
+  </div>
+</div>     
+<script type="text/javascript" src="comp20-final-project-main-page.js"></script>
+</body>
+</html> 
+
+
