@@ -1,15 +1,22 @@
 /*
 mongodb.js
+
 Author: Andreas Moe
-Date: 4/26/2020
+Date created: 4/26/2020
+
+Modified by: Katya Thorup
+Last modified: 4/27/2020
+
 Assignment: Comp20Final
 Purpose: Handle all operations concerning a Mongo DB of user accounts
 */
 
 exports.mongoObj = {
-    // add user
+    // add user to the database
     addUser: function(collection, userName) {
-        var record = {"userName": userName};
+        var songs = [];
+        var record = {"userName": userName, "songs": songs};
+
         collection.insertOne(record, (err, res) => {
             if (err) {
                 return 0;
@@ -20,7 +27,7 @@ exports.mongoObj = {
         });
     },
 
-    // delete user
+    // delete user from the database
     deleteUser: function(collection, userName) {
         var query = {"userName": userName};
 
@@ -46,27 +53,32 @@ exports.mongoObj = {
             };
         }
     return 0;
-    }
+    },
 
     // Adds songs to user account
-    addSongs: function (collection, user, newSongs) {
+    // Return 1 if succesffull, 0 if not successfull
+    addSongs: async function (collection, user, newSongs) {
 
         var query = {"userName": user.userName};
-
         songs = user.songs;
 
-        songs.push(newSongs);
+        for (i = 0; i < newSongs.length; i++) {
+            songs.push(newSongs[i]);
+        };
 
         var update = {$set: {"songs": songs}};
-
         collection.updateOne(query, update, (err, res) => {
-
-        if (err) { return 0; };
-
+            if (err) {
+                return err;
+            }
+            else {
+                return "Data posted";
+            };
         });
+    },
 
-    }
-
+    // Retrieve last 5 songs added to user account or less from the user object
+    // Return the list of songs if successfull. Otherwise return 0
     getDisplaySongs: function(user) {
 
         var display = [];
@@ -81,10 +93,14 @@ exports.mongoObj = {
         };
 
         for (i = first; i >= last; i--) {
+            display.push(user.songs[i]);
+        };
 
-        //display.push(user.songs[i])
-
-        console.log(user.songs[i]);
+        if(display.length == 0) {
+            return 0;
         }
+        else {
+            return display;
+        };
     }
 };
