@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <link rel="stylesheet" type="text/css" href="first_page.css">
-
-	<style type="text/css">
-		#page_two, #page_three {display: none;}
-	</style>
 </head>
 
 <body>
@@ -50,19 +46,6 @@
   </div>
 </div>
 
-    <div id="page_two">
-    	<input id='refresh_token' type='button' value='Refresh access token' onclick='refreshToken()'><br/>
-    	<input id='data_in' type='button' value="Submit data" onclick='postData()'>
-        <div id='usersongs'></div>
-        <input type='text' id='artist' placeholder="Enter desired artist">
-        <input type='button' value='Get artist' onclick='getArtists()'> <br><br>
-        <div id='artists'></div>
-    </div>
-
-    <div id="page_three">
-    	Thank you for finding new music with us!
-    </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
     var access_token = '';
@@ -87,78 +70,11 @@
         var params = getHashParams();
         var key = params.status;
         var err = params.error;
-        var data = params.userdata;
-        if (key == "success") {
-            document.getElementById('usersongs').innerHTML = data;
-        	document.getElementById('page_one').style.display = 'none';
-        	document.getElementById('page_two').style.display = 'block';
-        }
-        else if (key == 'fail') {
+        if (key == 'fail') {
             alert(err);
         	document.getElementById('page_one').style.display = 'block';
-        	document.getElementById('page_two').style.display = 'none';
         };
     })();
-    </script>
-
-    <script>
-    	function refreshToken() {
-    		url = "/refresh_token";
-
-    		var request = new XMLHttpRequest();
-    		request.open("GET", url, true);
-
-    		request.setRequestHeader('Content-type', 'application/text');
-
-    		request.onreadystatechange = function() {
-				if (request.readyState == 4 && request.status == 200) {
-                    response = request.responseText;
-                    if (response != "Token refreshed") {
-                        alert("Token not refreshed because: " + response);
-                    };
-				};
-			};
-			request.send();
-    	}
-
-        function getArtists() {
-            url = "/get_artist" + "?artist=" + document.getElementById('artist').innerHTML;
-
-            var request = new XMLHttpRequest();
-            request.open("GET", url, true);
-
-            request.setRequestHeader('Content-type', 'application/text');
-
-            request.onreadystatechange = function() {
-                if (request.readyState == 4 && request.status == 200) {
-                    alert(request.responseText);
-                };
-            };
-            request.send();
-        }
-
-    	function postData() {
-    		var to_send = [
-                {artist: 'Bruno Mars', song:'When I was your man'},
-                {artist: 'Bruno Mars', song:'Talking to the Moon'}
-            ];
-    		to_send = JSON.stringify(to_send);
-    		url = "/post";
-
-    		var request = new XMLHttpRequest();
-    		request.open("POST", url, true);
-
-    		request.setRequestHeader('Content-type', 'application/json');
-
-    		request.onreadystatechange = function() {
-				if (request.readyState == 4 && request.status == 200) {
-                    document.getElementById('page_two').style.display = 'none';
-                    document.getElementById('page_three').style.display = 'block';
-				};
-			};
-			request.send(to_send);
-
-    	};
     </script>
 </body>
 

@@ -17,8 +17,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-var mongoFunc = require('./mongodb.js');
-//var spotifyFunc = require('./spotifyAPI.js');    
+var mongoFunc = require('./mongodb.js');    
 var SpotifyWebApi = require('spotify-web-api-node');
 var MongoClient = require('mongodb').MongoClient;
 //var MongoUrl = "mongodb+srv://Mongo:MongoPassword@cluster0-nqsbw.mongodb.net/test?retryWrites=true&w=majority";
@@ -35,6 +34,7 @@ var spotifyApi = new SpotifyWebApi(credentials);
 var userName = ''; // username of the current user
 var userData = {}; // data for the user
 var user;
+var login = '';
 
 var app = express();
 app.use(express.static(__dirname + '/'))
@@ -136,37 +136,54 @@ app.get('/callback', function(req, res) {
   	var code = req.query.code || null;
   	var state = req.query.state || null;
   	var storedState = req.cookies ? req.cookies[stateKey] : null;
+    login = req.query.login || null;
 
-  	if (state === null || state !== storedState) {
-    	res.redirect('/#' +
-      	querystring.stringify({
-      		status: 'fail',
-        	error: 'state_mismatch'
-      	}));
-  	} else {
-    	res.clearCookie(stateKey);
+    if(login == null) { 
+        if (state === null || state !== storedState) {
+    	    res.redirect('/#' +
+      	    querystring.stringify({
+      		    status: 'fail',
+        	    error: 'state_mismatch'
+      	    }));
+  	    } else {
+    	    res.clearCookie(stateKey);
 
-    	spotifyApi.authorizationCodeGrant(code).then(
-  			function(data) {
-    			// Set the access token on the API object to use it in later calls
-    			spotifyApi.setAccessToken(data.body['access_token']);
-    			spotifyApi.setRefreshToken(data.body['refresh_token']);
+    	    spotifyApi.authorizationCodeGrant(code).then(
+  			    function(data) {
+    			    // Set the access token on the API object to use it in later calls
+    			    spotifyApi.setAccessToken(data.body['access_token']);
+    			    spotifyApi.setRefreshToken(data.body['refresh_token']);
 
-    			res.redirect('/#' +
-          		querystring.stringify({
-          			status: 'success',
-          			userdata: JSON.stringify(userData)
-          		}));
-  			},
-  			function(err) {
-    			res.redirect('/#' +
-        		querystring.stringify({
-        			status: 'fail',
-            		error: 'invalid_token'
-          		}));
-  			}
-		);
-	};
+    			    res.redirect('/main_page.html#' +
+          		    querystring.stringify({
+          			    status: 'success',
+          		    }));
+  			    },
+  			    function(err) {
+    			    res.redirect('/#' +
+        		    querystring.stringify({
+        			    status: 'fail',
+            		    error: 'invalid_token'
+          		    }));
+  			    }
+		    );
+	    };
+    } else {
+        spotifyApi.clientCredentialsGrant().then(
+            function(data) {
+
+                // Save the access token so that it's used in future calls
+                spotifyApi.setAccessToken(data.body['access_token']);
+                res.redirect('/main_page.html#' +
+                    querystring.stringify({
+                        status: 'success',
+                }));
+            },
+            function(err) {
+                console.log('Something went wrong when retrieving an access token', err);
+            }
+        );
+    };
 });
 
 /*
@@ -205,11 +222,7 @@ app.get('/login', function(req, res) {
             		user = await mongoFunc.mongoObj.findUser(items, userName);
             		if ((user == 0) && (choice == "newUser")) {
                 		await mongoFunc.mongoObj.addUser(collection, userName);
-                		res.redirect("/#" + 
-            			querystring.stringify({
-      						status: 'success',
-      						userdata: JSON.stringify(userData)
-      					}));	
+                		res.redirect("/callback?login=1");	
                 	}
                		else if ((user == 0) && (choice == "oldUser")) {
                     	res.redirect("/#" + 
@@ -227,11 +240,7 @@ app.get('/login', function(req, res) {
                 	}
                 	else {
                 		userData = await mongoFunc.mongoObj.getDisplaySongs(user);
-                		res.redirect("/#" + 
-            				querystring.stringify({
-      							status: 'success',
-        						userdata: JSON.stringify(userData)
-      					}));
+                		res.redirect('/callback?login=1');
                 	};
                 };
 			});
@@ -295,17 +304,71 @@ app.get('/refresh_token', function(req, res) {
     });
 });
 
-app.get('/get_artist', async function(req, res) {
-    
-    spotifyApi.searchArtists(query).then(
-        function(data) {
-            res.send(data.body);
-            res.end();
-        },
-        function(err) {
-            console.log(err);
-            res.end();
+app.get('/get_genres', function(req, res) {
+    var Options = {
+      url: 'https://api.spotify.com/v1/recommendations/available-genre-seeds',
+      headers: {
+        'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+      },
+      json: true
+    };
+
+    request.get(Options, function(request, response) {
+        data = response.body;
+        res.send(data);
+        res.end();
     });
+});
+
+app.get('/get_genre_artists', function(req, res) {
+    genre = req.query.genre;
+    res.set('Content-Type', 'text/json');
+    var Options = {
+      url: 'https://api.spotify.com/v1/recommendations' + '?seed_genres=' + genre,
+      headers: {
+        'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+      },
+      json: true
+    };
+
+    request.get(Options, function(request, response) {
+        data = response.body.tracks;
+        var return_data = [];
+        for (i = 0; i < data.length; i++) {
+            var temp = {
+                artists: {
+                    name: data[i].artists[0].name,
+                    id: data[i].artists[0].id,
+                    href: data[i].artists[0].href
+                },
+                album: {
+                    name: data[i].album.name,
+                    image: data[i].album.images[0].url,
+                    href: data[i].album.href,
+                    release_date: data[i].album.release_date
+                },
+                genre: genre,
+                duration: data[i].duration_ms,
+                href: data[i].href,
+                external_url: data[i].external_urls.spotify,
+                id: data[i].id,
+                name: data[i].name,
+                preview_url: data[i].preview_url
+            }
+            return_data.push(temp);
+        };
+        res.send(JSON.stringify(return_data));
+        res.end();
+    });
+});
+
+app.get('/get_album', function(req, res) {
+
+});
+
+
+app.get('/get_artist', function(req, res) {
+
 });
 
 app.listen(port);
