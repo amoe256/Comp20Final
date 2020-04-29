@@ -33,8 +33,8 @@ function printToPage(data) {
         listSongs += "<div class='row'><div class='col-sm-3' style='background-color:white;'>";
         listSongs += "<img src='" + data[i].album.image + "' style='width:45% border-radius: 100%' class='zoom' style='text-align: center;'></div>";
         listSongs += "<div class='col-sm-6' style='background-color:white;'>";
-        listSongs += "<table><tr><td><h5>Song: " + data[i].name + "</h5></td><td style='text-align: right'>Artist: " + data[i].artists.name + "</td></tr>";
-        listSongs += "<tr><td><h5>Album: " + data[i].album.name + "</h5></td><td style='text-align: right'>Duration in ms: " + data[i].duration + "</td></table>"
+        listSongs += "<table><tr><td><h5>Song: " + data[i].name + "</h5></td><td style='text-align: right'>Duration in ms: " + data[i].duration + "</td></tr>";
+        listSongs += "<tr><td><h5>Album: " + data[i].album.name + "</h5></td><td style='text-align: right'>Artist: " + data[i].artists.name + "</td></table>"
         listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
         listSongs += "<button><i class='fas fa-plus' style='color: #4842A1; size: 10px;''></i></button>";
         listSongs += "<button onclick='onesha()'' class ='like'><i class='fas fa-heart' style='color:red'></i></i></button>";
