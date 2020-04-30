@@ -32,8 +32,8 @@ playlist object = {
 }
 */
 
-var user_playlists;
-var temp_songs;
+var user_playlists; // global variable to keep track of all user songs
+var temp_songs; // global variable used to keep track of songs loaded from SPOTIFY API
 
 // Function executed on the load of the page to retrieve user data
 function getData() {
@@ -78,13 +78,13 @@ function printTracksToPage(data, sel) {
           listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration in ms: " + data[i].duration + "</td></table>"
           listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
           if ((sel == 0)) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id=1'" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
             listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           } else if (sel == 1) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id=1'" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
             listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
           } else {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id=1'" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
             listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           };
           listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
@@ -100,13 +100,13 @@ function printTracksToPage(data, sel) {
           listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration: " + data.duration + "</td></table>"
           listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
           if ((sel == 0)) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id=1'" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
             listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           } else if (sel == 1) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id=1'" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
             listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
           } else {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id=1'" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='`" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
             listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           };
           listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
@@ -131,8 +131,30 @@ function stopAudio(id) {
   audio1.pause();
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////// FUNCTIONS TO CONNECT TO SPOTIFY API //////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Function to retrieve songs from new release albums
 function listNewReleases() {
-  // het call to application.js to obtain newest releases on spotify
+  url = "/new_release";
+
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+
+    request.setRequestHeader('Content-type', 'text/plain');
+
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+          data = request.responseText;
+          data = JSON.parse(data);
+          alert(data);
+          //temp_songs = data;
+          //printTracksToPage(data, 0);
+        };
+    };
+    request.send();
 };
 
 // Function to retrieve spotify available genres and print them to the screen
@@ -186,6 +208,9 @@ function getTracks(value) {
 function getArtistInfo() {
 };
 
+////////////////////////////////////////////////////////////////////////////////
+//////////////////// FUNCTIONS TO WORK WITH FAVORITES //////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // Function to add the song to the Favorites list
 function checkFavorites(value) {
@@ -221,48 +246,15 @@ function checkFavorites(value) {
 };
 
 
-// Function to add the song to the Favorites list
-function checkPlaylists(value) {
-  var song;
-  var index;
-  for(i = 0; i < temp_songs.length; i++) {
-    if(temp_songs[i].href == value) {
-      song = temp_songs[i];
-    }
-  }
-
-  var color = document.getElementById("1" + value).style.color;
-  if (color == 'red') {
-    var name = prompt("Which playlist would you like to add it too?");
-    /*for (i = 0; i < user_playlists[0].songs.length; i++) {
-      if(user_playlists[0].songs.href == value) {
-        document.getElementById(value).style.color = 'black';
-        return;
-      }
-    }
-    user_playlists[0].songs.push(song);
-    document.getElementById(value).style.color = 'black'; */
-  }
-  else {
-    alert("button is black");
-    /*var index;
-    for (i = 0; i < user_playlists[0].songs.length; i++) {
-      if(user_playlists[0].songs.href == value) {
-        index = i;
-      }
-    }
-    user_playlists[0].songs.splice(index, 1);
-    alert(JSON.stringify(song) + " was deleted");
-    document.getElementById(value).style.color = 'red'; */
-  };
-};
-
-
 // Function used to display the songs in the favorites list onto the page
 function showFavorites() {
   printTracksToPage(user_playlists[0].songs, 1);
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+//////////////////// FUNCTIONS TO WORK WITH PLAYLISTS //////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // Function to retrieve and print the user playlists stored in mongoDB
 function showLocalPlaylists() {
@@ -276,7 +268,7 @@ function showLocalPlaylists() {
     for (i = 1; i < user_playlists.length; i++) {
       str += "<div class='addedPlaylist'>";
       str += "<button class='playlist_button' value='" + user_playlists[i].name + "' onclick='getPlaylistSongs(this.value)'>" + user_playlists[i].name + "</button>";
-      str += "<button type='button' value='" + user_playlists[i].name + "'onclick='deletePlaylist(this.value)'><i class='fa fa-search'></i></button>";
+      str += "<button type='button' value='" + user_playlists[i].name + "'onclick='deletePlaylist(this.value)'><i class='fa fa-minus' style='color:black; size: 10px'></i></button>";
       str += "</div><br>";
     };
       document.getElementById("list-homepage-songs").innerHTML = str;
@@ -321,12 +313,46 @@ function createPlaylist() {
   showLocalPlaylists();
 };
 
+// Function to add the song to the Favorites list
+function checkPlaylists(value) {
+  var song;
+  var index;
+  for(i = 0; i < temp_songs.length; i++) {
+    if(temp_songs[i].href == value) {
+      song = temp_songs[i];
+    }
+  }
 
-// Function to add the chosen song to user Playlists
-function addToPlaylist(data) {
-  alert(data);
+  var color = document.getElementById("1" + value).style.color;
+  if (color == 'red') {
+    var name = prompt("Which playlist would you like to add it too?");
+    /*for (i = 0; i < user_playlists[0].songs.length; i++) {
+      if(user_playlists[0].songs.href == value) {
+        document.getElementById(value).style.color = 'black';
+        return;
+      }
+    }
+    user_playlists[0].songs.push(song);
+    document.getElementById(value).style.color = 'black'; */
+  }
+  else {
+    alert("button is black");
+    /*var index;
+    for (i = 0; i < user_playlists[0].songs.length; i++) {
+      if(user_playlists[0].songs.href == value) {
+        index = i;
+      }
+    }
+    user_playlists[0].songs.splice(index, 1);
+    alert(JSON.stringify(song) + " was deleted");
+    document.getElementById(value).style.color = 'red'; */
+  };
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////// EXTRA FUNCTIONS ///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // Function to save user data to mongoDB
 function postData() {
