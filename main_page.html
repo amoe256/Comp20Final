@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/ff0710396e.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body onload='getData()'>
 <!-- 
   The left  part is basically where the menu and other useful links are.
   Whatever user searches will be displayed on the right part.
@@ -18,29 +18,26 @@
 <div class="split left">
   <div>
   <br>
-  <h2 style="display: inline; padding:2%;  font-size: 40px; color: white"> Musica!</h2>
-  <a href="#"><img src="profile_pic.png" id = "profile"></a>
-</div>
+  <h2 style="display: inline; padding:2%;  font-size: 30px; color: white"> Musica! <a href="#"><img src="profile_pic.png" id = "profile"></a></h2>
+  </div>
+
   <div class="centered">
   <br>
   <form class="example"  style="margin:auto;max-width:300px" on>
-    <input type="text" placeholder="Search songs, genre, ..." name="search2">
-    <button type="button"><i class="fa fa-search" onclick="loadDataFromDatabase2Page()"></i></button>
+    <input type="text" placeholder="Search Artists" id="search2" name="search2">
+    <button type="button"><i class="fa fa-search" onclick='getArtistInfo()'></i></button>
   </form>
   <br>
-  <p style="text-align: center;">Cool Menu, For You!</p>
+  <p style="text-align: center;">Cool Menu Just For You!</p>
   <button class="menu_button" onclick="listGenreFromDatabase()">Available Genres</button><br><br>
-  <button class="menu_button" onclick="printToPage()">Artists</button><br><br>
-  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Albums</button><br><br>
   <button class="menu_button" onclick="listNewReleases()">New Releases</button><br><br>
-  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Your Top Five Songs</button><br><br>
-  <button class="menu_button" onclick="loadDataFromDatabase2Page()">Your Favorites Tracks</button><br><br>
+  <button class="menu_button" onclick="showLocalPlaylists()">Your local playlists</button><br><br>
+  <button class="menu_button" onclick="showFavorites()">Your Favorites Tracks</button><br><br>
+  <button class="menu_button" onclick="postData()">Send Data</button><br><br>
   <br><br>
   
   <div id="playlist">
-    <p style="text-align: center; font-size: 16px; right: 60px"> Click Playlist Button to Display</p>
     <br><img src="playlist.png" style="width: 110%; left:50px">
-    
   </div>
   </div>
 </div>

@@ -14,8 +14,8 @@ Purpose: Handle all operations concerning a Mongo DB of user accounts
 exports.mongoObj = {
     // add user to the database
     addUser: function(collection, userName) {
-        var songs = [];
-        var record = {"userName": userName, "songs": songs};
+        var playlists = [];
+        var record = {"userName": userName, "playlists": playlists};
 
         collection.insertOne(record, (err, res) => {
             if (err) {
@@ -60,13 +60,13 @@ exports.mongoObj = {
     addSongs: async function (collection, user, newSongs) {
 
         var query = {"userName": user.userName};
-        songs = user.songs;
+        playlists = user.playlists;
 
-        for (i = 0; i < newSongs.length; i++) {
-            songs.push(newSongs[i]);
-        };
+        //for (i = 0; i < newSongs.length; i++) {
+        //    songs.push(newSongs[i]);
+        //};
 
-        var update = {$set: {"songs": songs}};
+        var update = {$set: {"playlists": playlists}};
         collection.updateOne(query, update, (err, res) => {
             if (err) {
                 return err;
@@ -79,10 +79,10 @@ exports.mongoObj = {
 
     // Retrieve last 5 songs added to user account or less from the user object
     // Return the list of songs if successfull. Otherwise return 0
-    getDisplaySongs: function(user) {
+    /*getDisplaySongs: function(user) {
 
         var display = [];
-        var first = user.songs.length - 1;
+        var first = user.playlists.length - 1;
         var last;
 
         if (first >= 5) {
@@ -93,7 +93,7 @@ exports.mongoObj = {
         };
 
         for (i = first; i >= last; i--) {
-            display.push(user.songs[i]);
+            display.push(user.playlists[i]);
         };
 
         if(display.length == 0) {
@@ -102,5 +102,5 @@ exports.mongoObj = {
         else {
             return display;
         };
-    }
+    }*/
 };

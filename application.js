@@ -32,7 +32,6 @@ var credentials = {
 var spotifyApi = new SpotifyWebApi(credentials);
 
 var userName = ''; // username of the current user
-var userData = {}; // data for the user
 var user;
 var login = '';
 
@@ -87,7 +86,6 @@ app.get('/loginSpotify', function(req, res) {
             		user = await mongoFunc.mongoObj.findUser(items, userName);
             		if ((user == 0) && (choice == "newUser")) {
                 		await mongoFunc.mongoObj.addUser(collection, userName);
-                		
                 		var state = generateRandomString(16);
 						res.cookie(stateKey, state);
 
@@ -111,7 +109,6 @@ app.get('/loginSpotify', function(req, res) {
       					}));
                 	}
                 	else {
-                		userData = await mongoFunc.mongoObj.getDisplaySongs(user);
 
                 		var state = generateRandomString(16);
 						res.cookie(stateKey, state);
@@ -157,6 +154,7 @@ app.get('/callback', function(req, res) {
     			    res.redirect('/main_page.html#' +
           		    querystring.stringify({
           			    status: 'success',
+                        user: JSON.stringify(user)
           		    }));
   			    },
   			    function(err) {
@@ -177,6 +175,7 @@ app.get('/callback', function(req, res) {
                 res.redirect('/main_page.html#' +
                     querystring.stringify({
                         status: 'success',
+                        user: JSON.stringify(user)
                 }));
             },
             function(err) {
@@ -239,7 +238,6 @@ app.get('/login', function(req, res) {
       					}));
                 	}
                 	else {
-                		userData = await mongoFunc.mongoObj.getDisplaySongs(user);
                 		res.redirect('/callback?login=1');
                 	};
                 };
@@ -360,6 +358,12 @@ app.get('/get_genre_artists', function(req, res) {
         res.send(JSON.stringify(return_data));
         res.end();
     });
+});
+
+app.get('/user_local_info', function(req, res) {
+    res.set('Content-Type', 'text/json');
+    res.send(JSON.stringify(user.playlists));
+    res.end();
 });
 
 app.get('/get_album', function(req, res) {
