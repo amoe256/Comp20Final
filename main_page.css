@@ -1,0 +1,268 @@
+body {
+  font-family: Arial;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.split {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+}
+
+.left {
+  left: 0;
+  background-color: #4842A1;
+  width:20%;
+}
+
+.right {
+  right: 0;
+  background-color: white;
+  width: 80%;
+}
+
+
+
+
+.container img {
+  border-radius: 10%;
+  height: 90.375px;
+  width: 90.375px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover;
+}
+.checked {
+  color: orange;
+}
+
+
+.zoom:hover {
+  -ms-transform: scale(1.25); /* IE 9 */
+  -webkit-transform: scale(1.25); /* Safari 3-8 */
+  transform: scale(1.25); 
+  transition: transform .2s;
+  position: relative;
+
+}
+
+
+.col-sm-3 button {
+  border: none;
+  outline: 0;
+  padding: 6px;
+  color: white;
+  background-color:  white;
+  cursor: pointer;
+  width: 25%;
+  font-size: 18px;
+  border-radius: 100%;
+}
+
+.col-sm-3 button:hover {
+  color: black;
+  opacity: 1.5;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: grey;
+}
+.horizontal_line {
+  border-top : 2px solid grey;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #F36B79;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #F36B79;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+.here {
+   background-image: linear-gradient(rgba(0.4,0.6,0.6,0.4),rgba(0,0,0,1.5)),url("musiic.jpg");
+   width: 100%;
+   height: 30vh;
+   margin-top: -20px;
+}
+.here h1, p {
+  left:2%;
+  top: 80%;
+  color: white;
+  position: relative;
+}
+
+.menu_button {
+  background-color:  #4CAF50;
+  border: none;
+  color: white;
+  left: 20%;
+  padding: 2px 4px;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  cursor: pointer;
+  width: 60%;
+  position: absolute;
+}
+
+.menu_button:hover {
+  background-color: #2B294E;
+  opacity: 1.6;
+}
+
+.playlist {
+  background-color:  #2B294E;
+  border: none;
+  color: white;
+  left: 20%;
+  padding: 2px 4px;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  cursor: pointer;
+  width: 60%;
+  position: absolute;
+}
+
+.playlist_button {
+  background-color:  #4CAF50;
+  border: none;
+  color: white;
+  left: 20%;
+  padding: 2px 4px;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  cursor: pointer;
+  width: 60%;
+  position: absolute;
+}
+
+.playlist_button:hover {
+  background-color: #2B294E;
+  opacity: 1.6;
+}
+
+.playlist:hover {
+  background-color: #4CAF50;
+  opacity: 1.6;
+}
+
+#profile {
+  border-radius: 5%;height: 50.375px;width: 50.375px;position:absolute; TOP:18px; LEFT:240px;
+}
+ #profile:hover {
+   -moz-box-shadow: 0 0 10px #ccc;
+      -webkit-box-shadow: 0 0 10px #ccc;
+      box-shadow: 0 0 10px #ccc;
+ }
+
+.table-shadow table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-shadow td, th {
+  text-align: center;
+  color: solid white;
+  padding: 8px;
+  width: 25%;
+}
+ 
+ .col-sm-6 table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+ }
+
+
+
+ .tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #4842A1;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.table-button {
+  background-color: transparent;
+  color: black;
+}
+
+.table-button:hover {
+  opacity: 1.6;
+}
