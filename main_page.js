@@ -188,7 +188,7 @@ function showFavorites() {
 // Function to retrieve and print the user playlists stored in mongoDB
 function showLocalPlaylists() {
   str = "<div class='here' style='color: black'><h1 >Our Genres!</h1></div>";
-  str += "<button class='menu_button' onclick='createPlaylist()'>Create New Playlist</button><br>";
+  str += "<button class='table-button' onclick='createPlaylist()'>Create New Playlist</button><br>";
   
   if(user_playlists.length == 0) {
     document.getElementById("list-homepage-songs").innerHTML = str;
