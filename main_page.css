@@ -259,10 +259,13 @@ form.example::after {
 }
 
 .table-button {
-  background-color: transparent;
-  color: black;
+  background-color: #F36B79;
+  border: none;
+  color: white;
+  width: 60%%;
 }
 
 .table-button:hover {
+  color:#39A2A6;
   opacity: 1.6;
 }
