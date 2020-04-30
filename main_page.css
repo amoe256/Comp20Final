@@ -205,7 +205,7 @@ form.example::after {
 }
 
 #profile {
-  border-radius: 5%;height: 50.375px;width: 50.375px;position:absolute; TOP:18px; LEFT:240px;
+  border-radius: 5%;height: 50.375px;width: 50.375px;position:absolute; TOP:18px; LEFT:200px;
 }
  #profile:hover {
    -moz-box-shadow: 0 0 10px #ccc;
