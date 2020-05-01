@@ -178,7 +178,7 @@ form.example::after {
 }
 
 .playlist_button {
-  background-color:  #4CAF50;
+  background-color:  #F36B79;
   border: none;
   color: white;
   left: 20%;
@@ -195,7 +195,7 @@ form.example::after {
 }
 
 .playlist_button:hover {
-  background-color: #2B294E;
+  color:#39A2A6;
   opacity: 1.6;
 }
 
@@ -233,6 +233,7 @@ form.example::after {
  }
 
 
+
  .tooltip {
   position: relative;
   display: inline-block;
@@ -261,7 +262,7 @@ form.example::after {
   background-color: #F36B79;
   border: none;
   color: white;
-  width: 60%;
+  width: 60%%;
 }
 
 .table-button:hover {

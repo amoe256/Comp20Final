@@ -417,8 +417,68 @@ app.get('/new_release', function(req, res) { // move this function into applicat
 });
 
 
-app.get('/get_artist', function(req, res) {
+// Function to get artists songs based on artist id
+app.get('/get_artist_songs', function(req, res) {
+    var artist_id = req.query.artist_id;
+    res.set('Content-Type', 'text/json');
 
+    var Options = {
+        url: 'https://api.spotify.com/v1/artists/' + artist_id + '/top-tracks?country=US',
+        headers: {
+          'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+        },
+        json: true,
+    };
+
+    request.get(Options, function(request, response) {
+        var data = response.body.tracks;
+        var return_data = [];
+        for (i = 0; i < 10; i++) {
+            var temp = {
+                artists: {
+                    name: data[i].artists[0].name,
+                    id: data[i].artists[0].id,
+                    href: data[i].artists[0].href
+                },
+                album: {
+                    name: data[i].album.name,
+                    image: data[i].album.images[0].url,
+                    href: data[i].album.href,
+                    release_date: data[i].album.release_date
+                },
+                genre: 'unknown',
+                duration: data[i].duration_ms,
+                href: data[i].href,
+                external_url: data[i].external_urls.spotify,
+                id: data[i].id,
+                name: data[i].name,
+                preview_url: data[i].preview_url
+            }
+            return_data.push(temp);
+        };
+        res.send(JSON.stringify(return_data));
+        res.end();
+    });
+});
+
+// Function to search for an artists with the queried name
+app.get('/search_artist', function(req,res){
+    var artist = req.query.artist;
+    res.set('Content-Type', 'text/json');
+
+    var Options = {
+      url: 'https://api.spotify.com/v1/search?q=' + artist + '&type=artist',
+      headers: {
+        'Authorization': 'Bearer ' + spotifyApi.getAccessToken()
+      },
+      json: true,
+    };
+
+    request.get(Options, function(request, response) {
+        var artist_id = response.body.artists.items[0].id;
+        res.send(artist_id);
+        res.end();
+    });
 });
 
 app.listen(port);

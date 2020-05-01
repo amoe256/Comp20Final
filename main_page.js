@@ -77,16 +77,8 @@ function printTracksToPage(data, sel) {
           listSongs += "<table><tr><td><h5>Song: " + data[i].name + "</h5></td><td style='text-align: right'>Album: " + data[i].album.name + "</td></tr>";
           listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration in ms: " + data[i].duration + "</td></table>"
           listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
-          if ((sel == 0)) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
-          } else if (sel == 1) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
-          } else {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
-          };
+          listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+          listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
           listSongs += "</div></div><hr class='horizontal_line'>";
       }
@@ -99,16 +91,8 @@ function printTracksToPage(data, sel) {
           listSongs += "<table><tr><td><h5>Song: " + data[i].name + "</h5></td><td style='text-align: right'>Album: " + data[i].album.name + "</td></tr>";
           listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration: " + data.duration + "</td></table>"
           listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
-          if ((sel == 0)) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
-          } else if (sel == 1) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
-          } else {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='`" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
-          };
+          listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+          listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
           listSongs += "</div></div><hr class='horizontal_line'>";
       };
@@ -132,14 +116,69 @@ function stopAudio(id) {
 }
 
 
+// Function used to print the favorites songs, needed to modify the favorites output
+// on the page through deleteFrom Favorites() function
+function printFavoritesPlaylists(data, sel, index) {
+
+    listSongs = "";
+    listSong = "";
+    listSong += "<div class='split right'><div class='centered' style='text-decoration-color: black'>";
+    listSong += "<div class='here'><h1>Your Tracks! Hover on image to listen.</h1></div><br>";
+      for (i = 0; i < data.length; i++) {
+        if (i %2 == 0) {
+          listSongs += "<div class='row'><div class='col-sm-3' style='background-color:white;'>";
+          listSongs += "<audio id='audioID"+i+"'><source src='" + data[i].preview_url + "' type='audio/mpeg'></audio>";
+          listSongs += "<a href='#' onmouseenter='playAudio("+i+")'onmouseout='stopAudio("+i+")' onclick='playAudio("+i+")'><img src='" + data[i].album.image + "'";
+          listSongs += "style='width:45% border-radius: 100%' class='zoom' style='text-align: center;'></a></div>";
+          listSongs += "<div class='col-sm-6' style='background-color:white;'>";
+          listSongs += "<table><tr><td><h5>Song: " + data[i].name + "</h5></td><td style='text-align: right'>Album: " + data[i].album.name + "</td></tr>";
+          listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration in ms: " + data[i].duration + "</td></table>"
+          listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
+          if (sel == 0) {
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            listSongs += "<button onclick='deleteFromFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
+          } else {
+            listSongs += "<button onclick='deleteFromPlaylists(this.value)' class ='like' value='"+ index + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
+          };
+          listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
+          listSongs += "</div></div><hr class='horizontal_line'>";
+      }
+        else {
+          listSongs += "<div class='row'><div class='col-sm-3' style='background-color:white;'>";
+          listSongs += "<audio id='audioID"+i+"'><source src='" + data[i].preview_url + "' type='audio/mpeg'></audio>";
+          listSongs += "<a href='#' onmouseenter='playAudio("+i+")' onmouseout='stopAudio("+i+")' onclick='playAudio("+i+")'><img src='" + data[i].album.image + "'";
+          listSongs += "style='width:45% border-radius: 100%' class='zoom' style='text-align: center;'></a></div>";
+          listSongs += "<div class='col-sm-6' style='background-color:white;'>";
+          listSongs += "<table><tr><td><h5>Song: " + data[i].name + "</h5></td><td style='text-align: right'>Album: " + data[i].album.name + "</td></tr>";
+          listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration: " + data.duration + "</td></table>"
+          listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
+          if (sel == 0) {
+            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            listSongs += "<button onclick='deleteFromFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
+          } else {
+            listSongs += "<button onclick='deleteFromPlaylists(this.value)' class ='like' value='" + index + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
+            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
+          };
+          listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
+          listSongs += "</div></div><hr class='horizontal_line'>";
+      };
+
+    };
+
+    listSongs += "</div></div>";
+    document.getElementById("list-homepage-songs").innerHTML = listSong + listSongs;
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////// FUNCTIONS TO CONNECT TO SPOTIFY API //////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Function to retrieve songs from new release albums
 function listNewReleases() {
-  url = "/new_release";
-
+  
+    url = "/new_release";
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
 
@@ -150,8 +189,8 @@ function listNewReleases() {
           data = request.responseText;
           data = JSON.parse(data);
           alert(data);
-          //temp_songs = data;
-          //printTracksToPage(data, 0);
+          //temp_songs = set to toal list of songs;
+          //printTracksToPage(total_list of songs);
         };
     };
     request.send();
@@ -206,6 +245,39 @@ function getTracks(value) {
 
 // Function to find all possible info on the artists inputed into the search bar
 function getArtistInfo() {
+  url = '/search_artist' + "?artist=" + document.getElementById('search2').value;
+    var request = new XMLHttpRequest();
+
+    request.open("GET", url, true);
+    request.setRequestHeader('Content-type', 'text/plain');
+
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+          data = request.responseText;
+          getArtistSongs(data);
+        };
+    };
+    request.send();
+};
+
+// Function to find all possible info on the artists inputed into the search bar
+function getArtistSongs(artist_id) {
+  url = '/get_artist_songs' + "?artist_id=" + artist_id;
+  var request = new XMLHttpRequest();
+
+  request.open("GET", url, true);
+  request.setRequestHeader('Content-type', 'text/plain');
+
+  request.onreadystatechange = function() {
+      if (request.readyState == 4 && request.status == 200) {
+        data = request.responseText;
+        data = JSON.parse(data);
+        alert(data);
+        temp_songs = data;
+        printTracksToPage(data);
+      };
+  };
+  request.send();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -215,7 +287,6 @@ function getArtistInfo() {
 // Function to add the song to the Favorites list
 function checkFavorites(value) {
   var song;
-  var index;
   for(i = 0; i < temp_songs.length; i++) {
     if(temp_songs[i].href == value) {
       song = temp_songs[i];
@@ -248,7 +319,19 @@ function checkFavorites(value) {
 
 // Function used to display the songs in the favorites list onto the page
 function showFavorites() {
-  printTracksToPage(user_playlists[0].songs, 1);
+  printFavoritesPlaylists(user_playlists[0].songs, 0, 0);
+};
+
+// Function used to display the songs in the favorites list onto the page
+function deleteFromFavorites(value) {
+  var index;
+  for (i = 0; i < user_playlists[0].songs.length; i++) {
+    if(user_playlists[0].songs.href == value) {
+      index = i;
+    }
+  }
+  user_playlists[0].songs.splice(index, 1);
+  printFavoritesPlaylists(user_playlists[0].songs, 0, 0);
 };
 
 
@@ -268,7 +351,8 @@ function showLocalPlaylists() {
     for (i = 1; i < user_playlists.length; i++) {
       str += "<div class='addedPlaylist'>";
       str += "<button class='playlist_button' value='" + user_playlists[i].name + "' onclick='getPlaylistSongs(this.value)'>" + user_playlists[i].name + "</button>";
-      str += "<button type='button' value='" + user_playlists[i].name + "'onclick='deletePlaylist(this.value)'><i class='fa fa-minus' style='color:black; size: 10px'></i></button>";
+      str += "<button style='border: none'";
+      str += "class='like' value='" + user_playlists[i].name + "'onclick='deletePlaylist(this.value)'><i class='fa fa-minus' style='color:black; size: 10px'></i></button>";
       str += "</div><br>";
     };
       document.getElementById("list-homepage-songs").innerHTML = str;
@@ -289,18 +373,6 @@ function deletePlaylist(value) {
 };
 
 
-// Function to display all of the songs saved to the choosen user playlist
-function getPlaylistSongs(value) {
-  var songs = [];
-  for (i = 1; i < user_playlists.length; i++) {
-    if (value == user_playlists[i].song) {
-      songs = user_playlists[i].songs;
-    };
-  };
-  printTracksToPage(songs, 2);
-};
-
-
 // Function to create a new user playlist
 function createPlaylist() {
   var name = prompt("What do you want to call your playlist?");
@@ -313,7 +385,21 @@ function createPlaylist() {
   showLocalPlaylists();
 };
 
-// Function to add the song to the Favorites list
+
+// Function to display all of the songs saved to the choosen user playlist
+function getPlaylistSongs(value) {
+  var songs = [];
+  var index = 0;
+  for (i = 1; i < user_playlists.length; i++) {
+    if (value == user_playlists[i].name) {
+      songs = user_playlists[i].name;
+      index = i;
+    };
+  };
+  printFavoritesPlaylists(songs, 1, index);
+};
+
+// Function to add the song to the choosen playlist
 function checkPlaylists(value) {
   var song;
   var index;
@@ -347,6 +433,21 @@ function checkPlaylists(value) {
     alert(JSON.stringify(song) + " was deleted");
     document.getElementById(value).style.color = 'red'; */
   };
+};
+
+function deleteFromPlaylist(value) {
+  var index;
+  var id = parseInt(value[0]);
+  var href = value.substr(1, ((value.length) - 1));
+
+  for (i = 0; i < user_playlists[id].songs.length; i++) {
+    if(user_playlists[id].songs.href == href) {
+      index = i;
+    }
+  }
+  user_playlists[id].songs.splice(index, 1);
+  printFavoritesPlaylists(user_playlists[id].songs, 1, id);
+
 };
 
 
