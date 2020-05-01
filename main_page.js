@@ -346,14 +346,14 @@ function showLocalPlaylists() {
   }
   else {
     for (i = 1; i < user_playlists.length; i++) {
-      str += "<div class='addedPlaylist'>";
-      str += "<button class='table-button' value='" + user_playlists[i].name + "' onclick='getPlaylistSongs(this.value)'>" + user_playlists[i].name + "</button>";
-      str += "<button type='button' value='" + user_playlists[i].name + "'onclick='deletePlaylist(this.value)'><i class='fa fa-minus' style='color:black; size: 10px'></i></button>";
-      str += "</div><br>";
+        str += "<div class='addedPlaylist'>";
+        str += "<button class='table-button' value='" + user_playlists[i].name + "' onclick='getPlaylistSongs(this.value)'>" + user_playlists[i].name + "</button>";
+        str += "<button type='button' value='" + user_playlists[i].name + "'onclick='deletePlaylist(this.value)'><i class='fa fa-minus' style='color:black; size: 10px'></i></button>";
+        str += "</div><br>";
+      };
+        document.getElementById("list-homepage-songs").innerHTML = str;
     };
-      document.getElementById("list-homepage-songs").innerHTML = str;
   };
-};
 
 
 // Function used to delete a playlist with name = name
