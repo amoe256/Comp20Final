@@ -30,7 +30,7 @@ var MongoUrl = "mongodb+srv://kthorup:phone0102@cluster0-o9cfs.mongodb.net/test?
 var credentials = {
 	clientId : 'c55c1a845e4849979265cc8212637412',
     clientSecret : 'ba64c04b5c20452a994a29cdebf1b77c',
-    redirectUri : 'http://localhost:8080/callback'
+    redirectUri : 'http://musica-comp20.herokuapp.com/index.html'
 };
 var spotifyApi = new SpotifyWebApi(credentials);
 
@@ -45,8 +45,7 @@ app.use(express.static(__dirname + '/'))
    .use(cors())
    .use(cookieParser());
 
-//var port = process.env.PORT || 3000;
-var port = 8080;
+var port = process.env.PORT || 8080;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS FOR LOGING IN ////////////////////////////////////////
