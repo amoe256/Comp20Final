@@ -60,11 +60,7 @@ exports.mongoObj = {
     addSongs: async function (collection, user, newSongs) {
 
         var query = {"userName": user.userName};
-        playlists = user.playlists;
-
-        //for (i = 0; i < newSongs.length; i++) {
-        //    songs.push(newSongs[i]);
-        //};
+        var playlists = newSongs;
 
         var update = {$set: {"playlists": playlists}};
         collection.updateOne(query, update, (err, res) => {
