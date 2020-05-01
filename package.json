@@ -15,7 +15,7 @@
   "bugs": {
     "url": ""
   },
-  "homepage": "main_page.html",
+  "homepage": "index.html",
   "dependencies": {
     "cookie-parse": "^0.4.0",
     "cookie-parser": "^1.4.5",
