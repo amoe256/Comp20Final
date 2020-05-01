@@ -1,22 +1,25 @@
 {
   "name": "projecttestkatya",
   "version": "1.0.0",
-  "description": "node app ",
-  "main": "check_mongo.js",
+  "description": "Musica web app",
+  "main": "application.js",
   "scripts": {
-    "start": "node check_mongo.js"
+    "start": "node application.js"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "",
+  "author": "Don't Care (Katya Thorup, Max Peicher, Siegfred Madeghe, Andreas Moe",
   "license": "ISC",
   "bugs": {
     "url": ""
   },
-  "homepage": "",
+  "homepage": "main_page.html",
   "dependencies": {
+    "cookie-parse": "^0.4.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^3.5.6",
     "request": "^2.88.2",

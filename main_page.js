@@ -264,15 +264,12 @@ function getArtistInfo() {
 function getArtistSongs(artist_id) {
   url = '/get_artist_songs' + "?artist_id=" + artist_id;
   var request = new XMLHttpRequest();
-
   request.open("GET", url, true);
   request.setRequestHeader('Content-type', 'text/plain');
-
   request.onreadystatechange = function() {
       if (request.readyState == 4 && request.status == 200) {
         data = request.responseText;
         data = JSON.parse(data);
-        alert(data);
         temp_songs = data;
         printTracksToPage(data);
       };
