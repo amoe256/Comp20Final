@@ -135,11 +135,11 @@ function printFavoritesPlaylists(data, sel, index) {
           listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration in ms: " + data[i].duration + "</td></table>"
           listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
           if (sel == 0) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            //listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
             listSongs += "<button onclick='deleteFromFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
           } else {
-            listSongs += "<button onclick='deleteFromPlaylists(this.value)' class ='like' value='"+ index + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
+            listSongs += "<button onclick='deleteFromPlaylist(this.value)' class ='like' value='"+ index + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
+            //listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           };
           listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
           listSongs += "</div></div><hr class='horizontal_line'>";
@@ -154,11 +154,11 @@ function printFavoritesPlaylists(data, sel, index) {
           listSongs += "<tr><td><h5>Artist: " + data[i].artists.name + "</h5></td><td style='text-align: right'>Duration: " + data.duration + "</td></table>"
           listSongs += "</div><div class='col-sm-3' style='background-color:white; '>";
           if (sel == 0) {
-            listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
+            //listSongs += "<button onclick='checkPlaylists(this.value)' class ='like' value='" + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:red; size: 10px'></i></button>";
             listSongs += "<button onclick='deleteFromFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:black'></i></button>";
           } else {
-            listSongs += "<button onclick='deleteFromPlaylists(this.value)' class ='like' value='" + index + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
-            listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
+            listSongs += "<button onclick='deleteFromPlaylist(this.value)' class ='like' value='" + index + data[i].href +"'><i id='1" + data[i].href + "'class='fas fa-plus' style='color:black; size: 10px'></i></button>";
+            //listSongs += "<button onclick='checkFavorites(this.value)' class ='like' value='" + data[i].href +"'><i id='" + data[i].href + "'class='fas fa-heart' style='color:red'></i></button>";
           };
           listSongs += "<button><i class='fas fa-share' style='color: #4CAF50'></i></button>";
           listSongs += "</div></div><hr class='horizontal_line'>";
@@ -339,7 +339,7 @@ function deleteFromFavorites(value) {
 // Function to retrieve and print the user playlists stored in mongoDB
 function showLocalPlaylists() {
   str = "<div class='here' style='color: black'><h1 >Our Genres!</h1></div>";
-  str += "<button class='table-button' onclick='createPlaylist()'>Create New Playlist</button><br><br>";
+  str += "<button class='menu_button' onclick='createPlaylist()'>Create New Playlist</button><br><br>";
   
   if(user_playlists.length == 0) {
     document.getElementById("list-homepage-songs").innerHTML = str;
@@ -389,7 +389,7 @@ function getPlaylistSongs(value) {
   var index = 0;
   for (i = 1; i < user_playlists.length; i++) {
     if (value == user_playlists[i].name) {
-      songs = user_playlists[i].name;
+      songs = user_playlists[i].songs;
       index = i;
     };
   };
@@ -399,36 +399,45 @@ function getPlaylistSongs(value) {
 // Function to add the song to the choosen playlist
 function checkPlaylists(value) {
   var song;
-  var index;
+  var index = -1;
   for(i = 0; i < temp_songs.length; i++) {
     if(temp_songs[i].href == value) {
       song = temp_songs[i];
-    }
-  }
+    };
+  };
+
+  var name = prompt("Enter playlist name");
+  for (i = 1; i < user_playlists.length; i++) {
+    if(user_playlists[i].name == name) {
+      index = i;
+    };
+  };
+
+  if(index == -1) {
+    alert("Playlist by that name does not exist");
+    return;
+  };
 
   var color = document.getElementById("1" + value).style.color;
   if (color == 'red') {
-    var name = prompt("Which playlist would you like to add it too?");
-    /*for (i = 0; i < user_playlists[0].songs.length; i++) {
-      if(user_playlists[0].songs.href == value) {
+    for (i = 0; i < user_playlists[index].songs.length; i++) {
+      if(user_playlists[index].songs.href == value) {
         document.getElementById(value).style.color = 'black';
         return;
-      }
-    }
-    user_playlists[0].songs.push(song);
-    document.getElementById(value).style.color = 'black'; */
+      };
+    };
+    user_playlists[index].songs.push(song);
+    document.getElementById("1" + value).style.color = 'black';
   }
   else {
-    alert("button is black");
-    /*var index;
-    for (i = 0; i < user_playlists[0].songs.length; i++) {
-      if(user_playlists[0].songs.href == value) {
-        index = i;
-      }
-    }
-    user_playlists[0].songs.splice(index, 1);
-    alert(JSON.stringify(song) + " was deleted");
-    document.getElementById(value).style.color = 'red'; */
+    var j;
+    for (i = 0; i < user_playlists[index].songs.length; i++) {
+      if(user_playlists[index].songs.href == value) {
+        j = i;
+      };
+    };
+    user_playlists[index].songs.splice(j, 1);
+    document.getElementById("1" + value).style.color = 'red';
   };
 };
 
@@ -444,7 +453,6 @@ function deleteFromPlaylist(value) {
   }
   user_playlists[id].songs.splice(index, 1);
   printFavoritesPlaylists(user_playlists[id].songs, 1, id);
-
 };
 
 
@@ -454,6 +462,13 @@ function deleteFromPlaylist(value) {
 
 // Function to save user data to mongoDB
 function postData() {
+  if (confirm("Do you want to log out?") == true) {
+    alert("Thank you for listening with Musica!");
+  } else {
+    return;
+  };
+
+
   var to_send = user_playlists;
   to_send = JSON.stringify(to_send);
   url = "/post";
@@ -465,12 +480,27 @@ function postData() {
 
   request.onreadystatechange = function() {
   if (request.readyState == 4 && request.status == 200) {
-     alert("Data posted");
+    redirect();
   };
 };
 request.send(to_send);
-
 };
+
+// Function to refresh user access token. Might not be nessesarry
+function redirect() {
+  url = "/redirect";
+
+  var request = new XMLHttpRequest();
+  request.open("GET", url, true);
+
+  request.setRequestHeader('Content-type', 'application/text');
+
+  request.onreadystatechange = function() {
+    if (request.readyState == 4 && request.status == 200) {
+    };
+  };
+request.send();
+}
 
 
 // Function to refresh user access token. Might not be nessesarry

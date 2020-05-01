@@ -68,6 +68,13 @@ app.get('/loginSpotify', function(req, res) {
 
 	userName = req.query.user_in || null;
 	var choice = req.query.user_status || null;
+    if(choice == null) {
+        res.redirect("/#" + 
+        querystring.stringify({
+            status: 'fail',
+            error: "Choose the user option"
+        }));
+    };
 	
 	//Establish mongo connection and query for the user
 	MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
@@ -202,7 +209,13 @@ app.get('/login', function(req, res) {
 
 	userName = req.query.user_in || null;
 	var choice = req.query.user_status || null;
-	//console.log("Name is: " + userName + " choice is: " + choice);
+	if(choice == null) {
+        res.redirect("/#" + 
+        querystring.stringify({
+            status: 'fail',
+            error: "Choose the user option"
+        }));
+    };
 	
 	//Establish mongo connection and query for the user
 	MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
@@ -289,6 +302,7 @@ app.post('/post', function(req, res) {
             		else {
             			body = JSON.parse(body);
             			var mongo_return = await mongoFunc.mongoObj.addSongs(collection, user, body);
+                        res.send("completed");
             			res.end();
             		};
             	});
@@ -297,6 +311,9 @@ app.post('/post', function(req, res) {
 	});
 });
 
+app.get("/redirect", function(req, res) {
+    res.redirect("/");
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS FOR RETRIEVING DATA ///////////////////////////////////
