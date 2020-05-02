@@ -188,11 +188,7 @@ function listNewReleases() {
         if (request.readyState == 4 && request.status == 200) {
           data = request.responseText;
           data = JSON.parse(data);
-<<<<<<< Updated upstream
-          //alert(data);
-=======
           alert("We are sorry, but this future is currently unavailable");
->>>>>>> Stashed changes
           //temp_songs = set to toal list of songs;
           //printTracksToPage(total_list of songs);
         };
