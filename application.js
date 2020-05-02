@@ -41,7 +41,7 @@ var login = '';
 
 // Initializing app
 var app = express();
-app.use(express.static(__dirname + '/'))
+app.use(express.static(__dirname + '/index.html'))
    .use(cors())
    .use(cookieParser());
 
@@ -68,7 +68,7 @@ app.get('/loginSpotify', function(req, res) {
 	userName = req.query.user_in || null;
 	var choice = req.query.user_status || null;
     if(choice == null) {
-        res.redirect("/#" + 
+        res.redirect("/index.html#" + 
         querystring.stringify({
             status: 'fail',
             error: "Choose the user option"
@@ -79,7 +79,7 @@ app.get('/loginSpotify', function(req, res) {
 	MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
 
         if (err) {
-            res.redirect("/#" + 
+            res.redirect("/index.html#" + 
             	querystring.stringify({
       				status: 'fail',
         			error: "Could not connect to database. Please try again"
@@ -91,7 +91,7 @@ app.get('/loginSpotify', function(req, res) {
 
         	collection.find().toArray(async (err, items) => {
             	if (err) {
-            		res.redirect("/#" + 
+            		res.redirect("/index.html#" + 
             		querystring.stringify({
       					status: 'fail',
         				error: err
@@ -110,14 +110,14 @@ app.get('/loginSpotify', function(req, res) {
 						res.redirect(authorizeURL);
                 	}
                		else if ((user == 0) && (choice == "oldUser")) {
-                    	res.redirect("/#" + 
+                    	res.redirect("/index.html#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: 'Username not found'
       					}));
                 	}
                 	else if ((user != 0) && (choice == "newUser")) {
-                		res.redirect("/#" + 
+                		res.redirect("/index.html#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: "Username already exists. Please choose a new one"
@@ -152,7 +152,7 @@ app.get('/callback', function(req, res) {
 
     if(login == null) { 
         if (state === null || state !== storedState) {
-    	    res.redirect('/#' +
+    	    res.redirect('/index.html#' +
       	    querystring.stringify({
       		    status: 'fail',
         	    error: 'state_mismatch'
@@ -173,7 +173,7 @@ app.get('/callback', function(req, res) {
           		    }));
   			    },
   			    function(err) {
-    			    res.redirect('/#' +
+    			    res.redirect('/index.html#' +
         		    querystring.stringify({
         			    status: 'fail',
             		    error: 'invalid_token'
@@ -209,7 +209,7 @@ app.get('/login', function(req, res) {
 	userName = req.query.user_in || null;
 	var choice = req.query.user_status || null;
 	if(choice == null) {
-        res.redirect("/#" + 
+        res.redirect("/index.html#" + 
         querystring.stringify({
             status: 'fail',
             error: "Choose the user option"
@@ -220,7 +220,7 @@ app.get('/login', function(req, res) {
 	MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
 		//console.log("Trying to connect");
         if (err) {
-            res.redirect("/#" + 
+            res.redirect("/index.html#" + 
             	querystring.stringify({
       				status: 'fail',
         			error: "Could not connect to database. Try again"
@@ -232,7 +232,7 @@ app.get('/login', function(req, res) {
 
         	collection.find().toArray(async (err, items) => {
             	if (err) {
-            		res.redirect("/#" + 
+            		res.redirect("/index.html#" + 
             		querystring.stringify({
       					status: 'fail',
         				error: err
@@ -245,14 +245,14 @@ app.get('/login', function(req, res) {
                 		res.redirect("/callback?login=1");	
                 	}
                		else if ((user == 0) && (choice == "oldUser")) {
-                    	res.redirect("/#" + 
+                    	res.redirect("/index.html#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: 'Username not found'
       					}));
                 	}
                 	else if ((user != 0) && (choice == "newUser")) {
-                		res.redirect("/#" + 
+                		res.redirect("/index.html#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: "Username already exists. Please choose a new one"
@@ -311,7 +311,7 @@ app.post('/post', function(req, res) {
 });
 
 app.get("/redirect", function(req, res) {
-    res.redirect("/");
+    res.redirect("/index.html");
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////
