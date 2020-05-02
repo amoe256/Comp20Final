@@ -1,7 +1,7 @@
 {
   "name": "musica-comp20",
   "version": "1.0.0",
-  "description": "node app ",
+  "description": "node app",
   "main": "application.js",
   "scripts": {
     "start": "node application.js"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Don't Care (Katya Thorup, Max Peicher, Siegfred Madeghe, Andreas Moe)",
+  "author": "Don't cares (Katya Thorup, Max Peicher, Siegfred Madeghe, Andreas Moe)",
   "license": "ISC",
   "bugs": {
     "url": ""
