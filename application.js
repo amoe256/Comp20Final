@@ -30,11 +30,7 @@ var MongoUrl = "mongodb+srv://kthorup:phone0102@cluster0-o9cfs.mongodb.net/test?
 var credentials = {
 	clientId : 'c55c1a845e4849979265cc8212637412',
     clientSecret : 'ba64c04b5c20452a994a29cdebf1b77c',
-<<<<<<< Updated upstream
     redirectUri : 'http://musica-comp20.herokuapp.com/callback'
-=======
-    redirectUri : 'https://musica-comp20.herokuapp.com/callback'
->>>>>>> Stashed changes
 };
 var spotifyApi = new SpotifyWebApi(credentials);
 
@@ -45,15 +41,12 @@ var login = '';
 
 // Initializing app
 var app = express();
-app.use(express.static(__dirname + '/index.html'))
+app.use(express.static(__dirname + '/'))
    .use(cors())
    .use(cookieParser());
 
 var port = process.env.PORT || 3000;
-<<<<<<< Updated upstream
-=======
-//var port = 8080;
->>>>>>> Stashed changes
+// var port = 8080;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS FOR LOGING IN ////////////////////////////////////////
@@ -76,7 +69,7 @@ app.get('/loginSpotify', function(req, res) {
 	userName = req.query.user_in || null;
 	var choice = req.query.user_status || null;
     if(choice == null) {
-        res.redirect("/index.html#" + 
+        res.redirect("/#" + 
         querystring.stringify({
             status: 'fail',
             error: "Choose the user option"
@@ -87,7 +80,7 @@ app.get('/loginSpotify', function(req, res) {
 	MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
 
         if (err) {
-            res.redirect("/index.html#" + 
+            res.redirect("/#" + 
             	querystring.stringify({
       				status: 'fail',
         			error: "Could not connect to database. Please try again"
@@ -99,7 +92,7 @@ app.get('/loginSpotify', function(req, res) {
 
         	collection.find().toArray(async (err, items) => {
             	if (err) {
-            		res.redirect("/index.html#" + 
+            		res.redirect("/#" + 
             		querystring.stringify({
       					status: 'fail',
         				error: err
@@ -118,14 +111,14 @@ app.get('/loginSpotify', function(req, res) {
 						res.redirect(authorizeURL);
                 	}
                		else if ((user == 0) && (choice == "oldUser")) {
-                    	res.redirect("/index.html#" + 
+                    	res.redirect("/#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: 'Username not found'
       					}));
                 	}
                 	else if ((user != 0) && (choice == "newUser")) {
-                		res.redirect("/index.html#" + 
+                		res.redirect("/#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: "Username already exists. Please choose a new one"
@@ -160,7 +153,7 @@ app.get('/callback', function(req, res) {
 
     if(login == null) { 
         if (state === null || state !== storedState) {
-    	    res.redirect('/index.html#' +
+    	    res.redirect('/#' +
       	    querystring.stringify({
       		    status: 'fail',
         	    error: 'state_mismatch'
@@ -181,7 +174,7 @@ app.get('/callback', function(req, res) {
           		    }));
   			    },
   			    function(err) {
-    			    res.redirect('/index.html#' +
+    			    res.redirect('/#' +
         		    querystring.stringify({
         			    status: 'fail',
             		    error: 'invalid_token'
@@ -217,7 +210,7 @@ app.get('/login', function(req, res) {
 	userName = req.query.user_in || null;
 	var choice = req.query.user_status || null;
 	if(choice == null) {
-        res.redirect("/index.html#" + 
+        res.redirect("/#" + 
         querystring.stringify({
             status: 'fail',
             error: "Choose the user option"
@@ -228,7 +221,7 @@ app.get('/login', function(req, res) {
 	MongoClient.connect(MongoUrl, {useUnifiedTopology: true}, function(err, db) {
 		//console.log("Trying to connect");
         if (err) {
-            res.redirect("/index.html#" + 
+            res.redirect("/#" + 
             	querystring.stringify({
       				status: 'fail',
         			error: "Could not connect to database. Try again"
@@ -240,7 +233,7 @@ app.get('/login', function(req, res) {
 
         	collection.find().toArray(async (err, items) => {
             	if (err) {
-            		res.redirect("/index.html#" + 
+            		res.redirect("/#" + 
             		querystring.stringify({
       					status: 'fail',
         				error: err
@@ -253,14 +246,14 @@ app.get('/login', function(req, res) {
                 		res.redirect("/callback?login=1");	
                 	}
                		else if ((user == 0) && (choice == "oldUser")) {
-                    	res.redirect("/index.html#" + 
+                    	res.redirect("/#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: 'Username not found'
       					}));
                 	}
                 	else if ((user != 0) && (choice == "newUser")) {
-                		res.redirect("/index.html#" + 
+                		res.redirect("/#" + 
             				querystring.stringify({
       							status: 'fail',
         						error: "Username already exists. Please choose a new one"
@@ -318,13 +311,6 @@ app.post('/post', function(req, res) {
 	});
 });
 
-<<<<<<< Updated upstream
-app.get("/redirect", function(req, res) {
-    res.redirect("/index.html");
-});
-
-=======
->>>>>>> Stashed changes
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS FOR RETRIEVING DATA ///////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
