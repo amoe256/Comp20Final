@@ -1,7 +1,11 @@
 {
   "name": "musica-comp20",
   "version": "1.0.0",
+<<<<<<< Updated upstream
   "description": "Musica web app",
+=======
+  "description": "node app ",
+>>>>>>> Stashed changes
   "main": "application.js",
   "scripts": {
     "start": "node application.js"
@@ -10,14 +14,21 @@
     "type": "git",
     "url": ""
   },
+<<<<<<< Updated upstream
   "author": "Don't Care (Katya Thorup, Max Peicher, Siegfred Madeghe, Andreas Moe",
+=======
+  "author": "Don't cares (Katya Thorup, Max Peicher, Siegfred Madeghe, Andreas Moe)",
+>>>>>>> Stashed changes
   "license": "ISC",
   "bugs": {
     "url": ""
   },
   "homepage": "index.html",
   "dependencies": {
+<<<<<<< Updated upstream
     "cookie-parse": "^0.4.0",
+=======
+>>>>>>> Stashed changes
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",

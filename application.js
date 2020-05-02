@@ -30,7 +30,11 @@ var MongoUrl = "mongodb+srv://kthorup:phone0102@cluster0-o9cfs.mongodb.net/test?
 var credentials = {
 	clientId : 'c55c1a845e4849979265cc8212637412',
     clientSecret : 'ba64c04b5c20452a994a29cdebf1b77c',
+<<<<<<< Updated upstream
     redirectUri : 'http://musica-comp20.herokuapp.com/callback'
+=======
+    redirectUri : 'https://musica-comp20.herokuapp.com/callback'
+>>>>>>> Stashed changes
 };
 var spotifyApi = new SpotifyWebApi(credentials);
 
@@ -46,6 +50,10 @@ app.use(express.static(__dirname + '/index.html'))
    .use(cookieParser());
 
 var port = process.env.PORT || 3000;
+<<<<<<< Updated upstream
+=======
+//var port = 8080;
+>>>>>>> Stashed changes
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS FOR LOGING IN ////////////////////////////////////////
@@ -310,10 +318,13 @@ app.post('/post', function(req, res) {
 	});
 });
 
+<<<<<<< Updated upstream
 app.get("/redirect", function(req, res) {
     res.redirect("/index.html");
 });
 
+=======
+>>>>>>> Stashed changes
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// FUNCTIONS FOR RETRIEVING DATA ///////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////

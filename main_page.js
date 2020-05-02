@@ -188,7 +188,11 @@ function listNewReleases() {
         if (request.readyState == 4 && request.status == 200) {
           data = request.responseText;
           data = JSON.parse(data);
+<<<<<<< Updated upstream
           //alert(data);
+=======
+          alert("We are sorry, but this future is currently unavailable");
+>>>>>>> Stashed changes
           //temp_songs = set to toal list of songs;
           //printTracksToPage(total_list of songs);
         };
@@ -479,27 +483,11 @@ function postData() {
 
   request.onreadystatechange = function() {
   if (request.readyState == 4 && request.status == 200) {
-    redirect();
+    window.location.href = "https://musica-comp20.herokuapp.com/"
   };
 };
 request.send(to_send);
 };
-
-// Function to refresh user access token. Might not be nessesarry
-function redirect() {
-  url = "/redirect";
-
-  var request = new XMLHttpRequest();
-  request.open("GET", url, true);
-
-  request.setRequestHeader('Content-type', 'application/text');
-
-  request.onreadystatechange = function() {
-    if (request.readyState == 4 && request.status == 200) {
-    };
-  };
-request.send();
-}
 
 
 // Function to refresh user access token. Might not be nessesarry
