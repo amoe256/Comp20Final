@@ -188,7 +188,7 @@ function listNewReleases() {
         if (request.readyState == 4 && request.status == 200) {
           data = request.responseText;
           data = JSON.parse(data);
-          alert(data);
+          //alert(data);
           //temp_songs = set to toal list of songs;
           //printTracksToPage(total_list of songs);
         };
